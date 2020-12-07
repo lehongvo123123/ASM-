@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #yourInfor{
+             position: relative;
+             top:-48px;
+             left:40px;
+        }
+        #inputInfor{
+               position: relative;
+               top:-40px;
+               left:13px;
+               
+        }
+        #numberCharecters{
+            position: relative;
+            top:-50px;
+            left:13px;
+
+        }
+        #countWord{
+            position:relative;
+            top:-85px;
+            left:220px;
+        }
+        #postInfor{
+             position: relative;
+            top:-85px;
+            left: 220px;
+
+        }
+        .newColor{
+            color:red;
+        }
+        .oldColor{
+            color:black;
+        }
+        #inforWord{
+               position: absolute;;
+               top:130px;
+               left:23px;
+               
+               
+        }
+        #areaYourInfor{
+            border:1px solid black;
+            width: 400px;
+            height:170px;
+            margin-bottom:30px; 
+
+        } 
+        .addBackGround{
+            position: relative;
+            border:1px solid black;
+            width: 400px;
+            height:170px;
+            margin-bottom:-80px; 
+            
+        }
+        .ddd{
+            margin-bottom: -100px;
+        }  
+    </style>
+</head>
+<body>
+    
+    <div id=areaYourInfor>
+     <img style="margin-left:2px;" src="/image/profile-purple.svg" alt="">
+     <h3 id="yourInfor">YOUR NAME HEAR</h3>
+     <textarea name="" id="inputInfor" cols="50" rows="3"></textarea> <br>
+     <p id="numberCharecters"> <span id="changeCharecters">140</span> charecters remaining. </p>
+     <p id="inforWord"></p>
+     <button id="countWord">WORD COUNT</button>
+     <button id="postInfor">POST</button>
+    </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+     <script>
+         var speed = 1;
+         var status =true;
+                 //---------------------------
+                $("#inputInfor").keydown(function(event){
+                 if(event.keyCode ==17 ||event.keyCode==91 ||event.keyCode==18||event.keyCode===46||
+                 event.keyCode==40||event.keyCode==39||event.keyCode==37||event.keyCode==38||event.keyCode==16||
+                 event.keyCode==45||event.keyCode==44||event.keyCode==123||event.keyCode==122||event.keyCode==121||
+                 event.keyCode==120||event.keyCode==112||event.keyCode==113||event.keyCode==114||event.keyCode==115||
+                 event.keyCode==116||event.keyCode==117||event.keyCode==118||event.keyCode==119||event.keyCode==27||
+                 event.keyCode==9||event.keyCode==20){
+                     speed =0;
+                 }else{
+                    speed =1;
+                    if(event.keyCode===8){
+                    if($("#changeCharecters").text()<140){
+                        $("#changeCharecters").text(parseInt($("#changeCharecters").text())+speed);
+                        if($("#changeCharecters").text()>=0){
+                            status=true;
+                          $("#numberCharecters").css("color","black");
+                    }
+                }   
+                  }else{
+                      speed=1;
+                       $("#changeCharecters").text(parseInt($("#changeCharecters").text())-speed)
+                    if($("#changeCharecters").text()<0){
+                          status=false;
+                          $("#numberCharecters").css("color","red");
+                    }
+                  //////////
+                    if(event.ctrlKey && event.keyCode==88){
+                         if(window.getSelection){
+                         var range1 =window.getSelection();
+                         var numCharecters1=(range1.toString()).length+1;
+                         $("#changeCharecters").text(parseInt($("#changeCharecters").text())+numCharecters1)
+                    }
+                  }
+                  }
+                }
+              })  
+              //post information --------------
+
+             $("#countWord").on("click",function(){
+                   var calWord= ($("#inputInfor").val()).length;
+                   var remainWord = 140-calWord;
+                   $("#inforWord").text("You write "+calWord+"  characters, and remaining "+remainWord+" characters.")   
+             })
+             
+          // change color when mouse over area of button
+              // countWord button
+             $("#countWord").mouseover(function(){
+                   $("#countWord").css("background","yellow")
+             })
+             $("#countWord").mouseout(function(){
+                   $("#countWord").css("background","white")
+             })
+             //postInfor button
+             $("#postInfor").mouseover(function(){
+                   $("#postInfor").css("background","yellow")
+             })
+             $("#postInfor").mouseout(function(){
+                   $("#postInfor").css("background","white")
+             })
+          // post information when click mouse
+          $("#postInfor").on("click",function(){
+            if($("#changeCharecters").text()>=0){ 
+                $("#changeCharecters").text("140")
+              var newDiv =  $("<div id='newDiv'>")
+                .css("position","relative")
+                .addClass("addBackGround")
+                .appendTo("body");
+               var yourImage = $("<img id='yourImage'>")
+                   .attr("src","/image/profile-purple.svg")
+                   .css("position","relative")
+                   .css("top","-90px")
+                   .css("left","3px")
+                   .appendTo("body");
+               var yourName = $("<h3 id='yourName'>")
+                   .text($("#yourInfor").text()) 
+                   .css("position","relative")
+                   .css("top","-137px")
+                   .css("left","40px")
+                   .appendTo("body");
+               var newDivInfor = $("<div id='newDivInfor'>")
+                   .css("position","relative")
+                   .text($("#inputInfor").val())
+                   .css("top","-140px")
+                   .css("marginLeft","8px")
+                   .css("marginBottom","-100px")
+                   .css("width","380px")
+                   .css("height","90px")
+                   .css("border","1px solid black")
+                   .appendTo("body")
+                var newButton = $("<button id='number'>") 
+                    .text("Edit")
+                    .css("position","relative")
+                    .css("left","280px")
+                    .css("top","-35px")
+                    .appendTo("body")
+                var remoteButton = $("<button id='remoteButton'>") 
+                      .text("remote")
+                      .css("position","relative")
+                    .css("left","290px")
+                    .css("top","-35px")
+                    .appendTo("body")
+                //---------------------------------- 
+                    $("#number").click(function(){
+                      var inforChange=prompt(" What do you want change")
+                    $("#newDivInfor").text(inforChange);
+          })    
+           //-------------------------------
+               $("#remoteButton").click(function(){
+                    $("#number").remove();
+                    $("#remoteButton").remove();
+                    $("#newDiv").remove();
+                    $("#newDivInfor").remove();
+                    $("#yourName").remove();
+                    $("#yourImage").remove();
+              })
+              //----------------------------
+              $("#inputInfor").val("");
+               }else{
+                    $("#inforWord").text("You have entered over characters")
+               }
+                        
+          })
+            
+         
+        
+              
+     </script>
+</body>
+</html>
